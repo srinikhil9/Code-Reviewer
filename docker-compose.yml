@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  ai-code-reviewer:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-code-review-assistant
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o}
+      - LANGFLOW_HOST=0.0.0.0
+      - LANGFLOW_PORT=7860
+      - ALLOW_HUMAN_INPUT=${ALLOW_HUMAN_INPUT:-0}
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./flows:/app/flows
+      - ./examples:/app/examples
+      - ./output:/app/output
+    networks:
+      - ai-reviewer-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "scripts/validate_environment.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  langflow:
+    image: langflowai/langflow:latest
+    container_name: langflow-server
+    environment:
+      - LANGFLOW_HOST=0.0.0.0
+      - LANGFLOW_PORT=7860
+      - LANGFLOW_WORKERS=1
+    ports:
+      - "7861:7860"  # Map to different port to avoid conflict
+    volumes:
+      - langflow_data:/app/langflow
+      - ./flows:/app/flows:ro
+    networks:
+      - ai-reviewer-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  ai-reviewer-network:
+    driver: bridge
+
+volumes:
+  langflow_data:
+    driver: local
