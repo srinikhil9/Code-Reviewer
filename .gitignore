@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# Node
+node_modules/
+dist/
+build/
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and caches
+*.log
+*.cache/
+
+# Databases
+*.sqlite3
+*.db
+
+# LangFlow exports (keep JSONs, ignore large runtime artifacts)
+flows/**/artifacts/
+
+
