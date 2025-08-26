@@ -84,6 +84,32 @@ User Input → Orchestrator → {
    - Watch as agents collaborate to generate, review, and document code
    - Approve or request changes at human checkpoints
 
+### LangGraph Runner (alternative to Langflow UI)
+
+Run the equivalent multi-agent flow with LangChain + LangGraph:
+
+1. Install dependencies
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Set environment variables (or use a local .env)
+   ```bash
+   export OPENAI_API_KEY=your_key_here    # PowerShell: $env:OPENAI_API_KEY="..."
+   export OPENAI_MODEL=gpt-4o            # optional
+   ```
+
+3. Run the flow
+   ```bash
+   python -m flows.run_langgraph "Create a Python function that validates email addresses using regex"
+   ```
+
+4. Optional: require manual approval during runs
+   ```bash
+   export ALLOW_HUMAN_INPUT=1
+   python -m flows.run_langgraph "Implement an LRU cache in Python"
+   ```
+
 ### Programmatic Example
 
 See `example_usage.py` for a simple client using Langflow's API.
