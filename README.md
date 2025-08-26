@@ -142,6 +142,7 @@ Each agent has customizable system prompts in the flow:
 ## 📚 Documentation
 
 - Extended README: `github_readme.md`
+- LangGraph runner: `docs/LangGraph.md`
 - Contributing Guide: `CONTRIBUTING.md`
 - Suggested Repo Layout: `github_structure.md`
 
