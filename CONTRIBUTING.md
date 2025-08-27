@@ -74,6 +74,19 @@ git push origin feature/your-feature-name
 - Docstrings for functions and classes
 - Clear component names and IO for Langflow custom components
 
+## ✨ Code Style and Quality
+
+To maintain a consistent and high-quality codebase, we use the following tools:
+
+- **Black**: For automated code formatting.
+- **Ruff**: For linting and identifying potential issues.
+
+Please format your code before committing:
+```bash
+black .
+ruff check . --fix
+```
+
 ## 🧪 Testing
 
 Add tests where applicable. If you include example scripts, ensure they run against a locally running Langflow instance.
