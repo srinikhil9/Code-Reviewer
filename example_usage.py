@@ -74,7 +74,15 @@ class CodeReviewAssistant:
         response.raise_for_status()
         
         return response.json()
-    
+
+    def _extract_response_text(self, response: Dict[str, Any]) -> str:
+        """Extracts the response text from the complex JSON structure."""
+        try:
+            # Navigate through the nested structure
+            return response['outputs'][0]['outputs'][0]['results']['message']['text']
+        except (KeyError, IndexError):
+            return "No response or invalid format"
+
     def get_conversation_history(self, session_id: str) -> list:
         """Get conversation history for a session.
         
@@ -106,7 +114,7 @@ def main():
     result = assistant.submit_task(task)
     
     print(f"Task: {task}")
-    print(f"Response: {result.get('outputs', [{}])[0].get('outputs', [{}])[0].get('results', {}).get('message', {}).get('text', 'No response')}")
+    print(f"Response: {assistant._extract_response_text(result)}")
     print()
     
     # Example 2: Code review request
@@ -128,7 +136,7 @@ def calculate_factorial(n):
     result = assistant.submit_task(review_task)
     
     print(f"Code to review:\n{code_to_review}")
-    print(f"Review feedback: {result.get('outputs', [{}])[0].get('outputs', [{}])[0].get('results', {}).get('message', {}).get('text', 'No response')}")
+    print(f"Review feedback: {assistant._extract_response_text(result)}")
     print()
     
     # Example 3: Documentation request
@@ -153,7 +161,7 @@ def binary_search(arr, target):
     result = assistant.submit_task(doc_task)
     
     print(f"Original code:\n{undocumented_code}")
-    print(f"Documented version: {result.get('outputs', [{}])[0].get('outputs', [{}])[0].get('results', {}).get('message', {}).get('text', 'No response')}")
+    print(f"Documented version: {assistant._extract_response_text(result)}")
     print()
     
     # Example 4: Complex algorithm request
@@ -172,7 +180,7 @@ def binary_search(arr, target):
     result = assistant.submit_task(algorithm_task)
     
     print(f"Algorithm request: {algorithm_task}")
-    print(f"Generated solution: {result.get('outputs', [{}])[0].get('outputs', [{}])[0].get('results', {}).get('message', {}).get('text', 'No response')}")
+    print(f"Generated solution: {assistant._extract_response_text(result)}")
     print()
 
 
@@ -200,7 +208,7 @@ def batch_processing_example():
             results.append({
                 'task': task,
                 'success': True,
-                'response': result.get('outputs', [{}])[0].get('outputs', [{}])[0].get('results', {}).get('message', {}).get('text', 'No response')
+                'response': assistant._extract_response_text(result)
             })
         except Exception as e:
             results.append({
