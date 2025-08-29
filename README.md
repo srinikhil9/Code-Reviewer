@@ -35,6 +35,8 @@ User Input → Orchestrator → {
 
 ## 🚀 Quick Start
 
+> **New!** Use our CLI tool: `python cli.py --help` for easy interaction
+
 ### Prerequisites
 - [Langflow](https://langflow.org/) installed
 - OpenAI API key (or other LLM provider)
