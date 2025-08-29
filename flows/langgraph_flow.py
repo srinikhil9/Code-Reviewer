@@ -1,7 +1,7 @@
 import asyncio
 import os
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, Callable
 
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
@@ -53,10 +53,29 @@ class FlowState:
 # -----------------------------
 
 def llm(model: str = os.getenv("OPENAI_MODEL", "gpt-4o"), temperature: float = 0.1) -> ChatOpenAI:
+    """Create a configured ChatOpenAI instance.
+    
+    Args:
+        model: The OpenAI model to use
+        temperature: The temperature setting for response generation
+        
+    Returns:
+        Configured ChatOpenAI instance
+    """
     return ChatOpenAI(model=model, temperature=temperature)
 
 
 async def call_llm(system_prompt: str, user_text: str, model: Optional[str] = None) -> str:
+    """Call the LLM with a system prompt and user text.
+    
+    Args:
+        system_prompt: The system prompt to use
+        user_text: The user's input text
+        model: Optional model override
+        
+    Returns:
+        The LLM's response as a string
+    """
     chain = (ChatPromptTemplate.from_messages([("system", system_prompt), ("human", "{q}")]) | llm(model))
     msg = await chain.ainvoke({"q": user_text})
     return msg.content if hasattr(msg, "content") else str(msg)
@@ -172,7 +191,7 @@ async def human_in_the_loop(state: FlowState) -> FlowState:
 # Graph builder
 # -----------------------------
 
-def build_graph() -> StateGraph:
+def build_graph() -> StateGraph[FlowState]:
     graph = StateGraph(FlowState)
 
     # Nodes
