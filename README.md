@@ -67,6 +67,19 @@ User Input → Orchestrator → {
    # Import the flows/Coding_Reviewer.json file (or your exported flow)
    ```
 
+5. Validate installation
+   ```bash
+   # Test LangGraph runner
+   python -m flows.run_langgraph "Create a simple hello world function"
+   
+   # Run tests (optional)
+   pytest tests/
+   
+   # Check code formatting (optional)
+   black --check .
+   ruff check .
+   ```
+
 ### Usage
 
 1. Start Langflow
@@ -139,12 +152,42 @@ Each agent has customizable system prompts in the flow:
 - Default: OpenAI GPT-4
 - Supports: Anthropic Claude, Google models, local models via Ollama
 
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**1. ModuleNotFoundError**
+```bash
+# Ensure you're in the project directory and dependencies are installed
+pip install -r requirements.txt
+```
+
+**2. API Key Errors**
+```bash
+# Set your OpenAI API key
+export OPENAI_API_KEY=your_key_here  # Linux/Mac
+$env:OPENAI_API_KEY="your_key_here"  # Windows PowerShell
+```
+
+**3. Langflow Connection Issues**
+```bash
+# Ensure Langflow is running
+langflow run --host 0.0.0.0 --port 7860
+```
+
+**4. Import Errors in Tests**
+```bash
+# Run tests from project root
+pytest tests/ -v
+```
+
 ## 📚 Documentation
 
 - Extended README: `github_readme.md`
 - LangGraph runner: `docs/LangGraph.md`
 - Contributing Guide: `CONTRIBUTING.md`
 - Suggested Repo Layout: `github_structure.md`
+- Version History: `CHANGELOG.md`
 
 ## 🤝 Contributing
 
