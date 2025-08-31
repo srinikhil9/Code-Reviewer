@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Added (August 30, 2025)
+- Utility functions for code processing and validation
+- Centralized configuration management system
+- Quick setup script for new users  
+- Production health check script for deployments
+- Quick contributing guide for fast onboarding
+
+### Added (August 29, 2025)
+- CLI tool reference in README
 - Basic test structure with pytest configuration
 - Type hints and docstring improvements in `langgraph_flow.py`
 - Development dependencies: `black`, `pydantic`, `ruff`, `pytest`
@@ -17,9 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Enhanced `requirements.txt` with development and testing dependencies
 - Improved code documentation and type annotations
+- Better onboarding experience with multiple setup tools
 
 ### Fixed
 - Simplified complex response parsing logic in example usage
+- VS Code import organization settings
 
 ## [0.1.0] - 2025-01-XX
 
